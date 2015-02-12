@@ -1,0 +1,3 @@
+JS Playground for playing around with the Tableau JS APi 
+
+Resources contains files I've used int eh past and the basic js, html and css frameworks I've used to accelrate devlopment. 

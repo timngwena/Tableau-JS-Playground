@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Tableau JS Playground</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+      
+    <div class="container">
+            <div class="row">
+                    <div class="col-md-12">
+                        <h1>Messing arround with the API...</h1>
+                         <h3 style="text-align: center;" id='sheetName'></h3>
+                            <br/>                      
+                    </div>
+            </div>
+        
+           
+            <div class="row">   
+                    <div class="col-md-2">
+                        <h4> Switching Views</h4>
+                        <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                            Select Dashboard
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="switchView('bar-chart')">bar-chart</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="switchView('bar-chart2')">bar-chart2</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="switchView('bar-charts')">bar-charts</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="switchView('Map-Large')">Map-Large</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="switchView('Map-W/out-Filter')">Map-W/out-Filter</a></li>
+                          </ul>
+                        </div>   
+                        <h4> Filtering and Marks </h4>
+                        <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                            Basic Filters
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            
+                            
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick="showOnly('Department','Technology')">Show Only Technology</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick="alsoShow('Department', 'Furniture')">Add Furniture </a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick="dontShow('Department','Technology')">Don't Show Technology</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick="clearFilter('Department')">Reset / Clear Department Filter</a></li>
+                            <li><a onClick="showOnly('YEAR(Order Date)',['2010','2012'])">Show 2010 and 2012</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick="clearFilter('YEAR(Order Date)')">Reset / Clear Year Filter</a></li>
+
+                              
+                          </ul>
+                        </div>   
+                        
+                        <br/>
+                        
+                        <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                            Mark Selection
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick="selectMarks('Country / Region','United States of America')">Select United States of America Marks (where possible)</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick="addMarks('Country / Region','China')">Add China to selection (where possible)</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onClick="clearSelection('Country / Region')">Clear Mark Selection</a></li>
+                           
+                          </ul>
+                        </div>  
+                        
+                        <br/>
+                        
+                        
+                        <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                           Advanced Filters
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                  
+                            <li><a onClick="showRange('SUM(Sales)',2400000,4000000)">Filter to Range between 2.4M and 4M</a></li>
+                            <li><a onClick="showDateRange('YEAR(Order Date)','2011','2013')">Show '95-2005 with Range</a></li>
+                            <li><a onClick="showLastNYears('Order Date', 2)">Show Last 2 Years</a></li>
+                            <li><a onClick="showLastNYears('Order Date', 3, '2000')">Show '90-2000 with Relative</a></li>
+                           
+                          </ul>
+                        </div>  
+                        
+                        
+                        
+                                       
+                     </div>
+                
+                    <div class="col-md-10">
+                        
+                         <div id="TableauDiv">
+                        </div>
+                        
+                    </div>
+                
+                
+                
+                
+                    </div>
+      
+            </div> 
+      
+      
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+      
+    <!-- Tableau JS API and custom JS Script -->
+    <script type="text/javascript" src="http://public.tableausoftware.com/javascripts/api/tableau_v8.js"></script>
+    <script src="js/tableauscript.js"></script> 
+     
+  </body>
+</html>
